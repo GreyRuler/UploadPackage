@@ -1,0 +1,32 @@
+name: Cache npm packages
+
+on:
+    push:
+        branches: [ "main" ]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Install packages
+              run: npm install
+
+            - name: Pack packages
+              run: npm pack
+
+            - name: Cache packages
+              uses: actions/cache@v2
+              with:
+                  path: node_modules
+                  key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+                  restore-keys: |
+                      ${{ runner.os }}-node-
+
+            - name: Upload artifact
+              uses: actions/upload-artifact@v2
+              with:
+                  name: my-artifact
+                  path: '*.tgz'
