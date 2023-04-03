@@ -15,7 +15,7 @@ jobs:
               run: npm install
               
             - name: Install new packages
-              run: npm install @faker-js/faker --save-dev; npm install rxjs;
+              run: npm install @faker-js/faker --save-dev; npm install rxjs; npm install koa; npm install @koa/router; npm install koa-body;
 
             - name: Upload artifact
               uses: actions/upload-artifact@v2
